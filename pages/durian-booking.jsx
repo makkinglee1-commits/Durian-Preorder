@@ -1,6 +1,9 @@
+"use client"; // ต้องใส่บรรทัดนี้
+
 import React, { useState } from "react";
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxEUc_ThdD7MYGa6R6dVVVPCllbe-HrCGrBVNgh-4oEs8U6-8k7ieA5Jc3e0Rfe0UjW/exec";
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbxEUc_ThdD7MYGa6R6dVVVPCllbe-HrCGrBVNgh-4oEs8U6-8k7ieA5Jc3e0Rfe0UjW/exec";
 
 const durianTypes = [
   "หมอนทอง",
@@ -11,12 +14,12 @@ const durianTypes = [
   "กระดุม",
   "พวงมณี",
   "นกหยิบ",
-  "กบชายน้ำ"
+  "กบชายน้ำ",
 ];
 
 const price = 500;
 
-function App() {
+export default function Home() {
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
   const [order, setOrder] = useState(
@@ -44,14 +47,14 @@ function App() {
       phone,
       items: selected,
       grandTotal: selected.reduce((s, it) => s + it.total, 0),
-      status: "รอชำระ"
+      status: "รอชำระ",
     };
 
     try {
       const res = await fetch(SCRIPT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       const json = await res.json();
@@ -86,31 +89,4 @@ function App() {
           <input
             type="text"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
-
-        <h3>เลือกสายพันธุ์ทุเรียน (ลูกละ 500)</h3>
-        {durianTypes.map((type) => (
-          <div key={type}>
-            <label>{type}: </label>
-            <input
-              type="number"
-              min="0"
-              value={order[type]}
-              onChange={(e) =>
-                setOrder({ ...order, [type]: Number(e.target.value) })
-              }
-            />
-          </div>
-        ))}
-
-        <button type="submit" style={{ marginTop: "20px" }}>
-          สั่งจอง
-        </button>
-      </form>
-    </div>
-  );
-}
-
-export default App;
+            onChange={(e)
